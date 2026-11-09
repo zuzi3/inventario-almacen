@@ -1,9 +1,9 @@
+
 import java.util.ArrayList;
 
 /**
- * Gestiona la lista de productos del almacén (Bodega).
- * Persona A: registrar y vender.
- * Persona B: mostrarInventario y mostrarStockCritico.
+ * Gestiona la lista de productos del almacén (Bodega). Persona A: registrar y
+ * vender. Persona B: mostrarInventario y mostrarStockCritico.
  */
 public class Inventario {
 
@@ -30,11 +30,30 @@ public class Inventario {
     // TODO (Persona B): CASO DE USO 3 - Ver inventario.
     // Imprimir nombre y stock de cada producto.
     public void mostrarInventario() {
+        if (productos.isEmpty()) {
+            System.out.println("El inventario está vacío.");
+            return;
+        }
+        System.out.println("--- INVENTARIO ---");
+        for (Producto p : productos) {
+            System.out.println(p.getNombre() + " | Stock: " + p.getStock());
+        }
     }
 
     // TODO (Persona B): CASO DE USO 4 - Ver stock crítico.
     // Imprimir solo los productos con 5 unidades o menos.
     public void mostrarStockCritico() {
+        boolean hayCriticos = false;
+        System.out.println("--- STOCK CRÍTICO (5 o menos) ---");
+        for (Producto p : productos) {
+            if (p.getStock() <= 5) {
+                System.out.println(p.getNombre() + " | Stock: " + p.getStock());
+                hayCriticos = true;
+            }
+        }
+        if (!hayCriticos) {
+            System.out.println("No hay productos con stock crítico.");
+        }
     }
 
     public ArrayList<Producto> getProductos() {

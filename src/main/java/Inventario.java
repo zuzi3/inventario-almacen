@@ -12,19 +12,41 @@ public class Inventario {
     // TODO (Persona A): buscar un producto por nombre (ignorar mayúsculas).
     // Devolver el Producto o null si no existe.
     public Producto buscarProducto(String nombre) {
+        for (Producto p : productos) {
+            if(p.getNombre().equalsIgnoreCase(nombre)){ 
+                return p;
+            }
+        }
+
         return null;
     }
 
     // TODO (Persona A): CASO DE USO 1 - Registrar.
     // Si el producto existe, sumarle el stock; si no, crearlo y agregarlo a la lista.
     public void registrar(String nombre, int cantidad) {
+        Producto existente = buscarProducto(nombre);
+        if(existente != null) {
+            existente.agregarStock(cantidad);
+        } else {
+            productos.add(new Producto(nombre, cantidad));
+            
+        }
     }
+
 
     // TODO (Persona A): CASO DE USO 2 - Vender.
     // Devolver true si la venta se realizó; false si no existe el producto
     // o si no hay stock suficiente. NUNCA dejar stock negativo.
     public boolean vender(String nombre, int cantidad) {
-        return false;
+        Producto producto = buscarProducto(nombre);
+        if (producto == null) {
+            return false;
+        }
+        if(cantidad <= 0 || cantidad > producto.getStock()) {
+         return false;
+        }
+        producto.restarStock(cantidad);
+        return true;
     }
 
     // TODO (Persona B): CASO DE USO 3 - Ver inventario.

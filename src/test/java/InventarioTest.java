@@ -1,5 +1,6 @@
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -11,17 +12,26 @@ public class InventarioTest {
     // TODO: registrar "Bebida 3L" con 10, volver a registrar con 5 y comprobar
     // que el stock queda en 15 (assertEquals).
     @Test
-    void agregarStockSumaAlExistente() {
-    }
+void agregarStockSumaAlExistente() {
+    Inventario inv = new Inventario();
+    inv.registrar("Bebida 3L", 10);
+    inv.registrar("Bebida 3L", 5);
+    assertEquals(15, inv.buscarProducto("Bebida 3L").getStock());
+}
 
-    // TODO: registrar con 10, vender 4 y comprobar que quedan 6.
-    @Test
-    void venderRestaStock() {
-    }
+@Test
+void venderRestaStock() {
+    Inventario inv = new Inventario();
+    inv.registrar("Bebida 3L", 10);
+    assertTrue(inv.vender("Bebida 3L", 4));
+    assertEquals(6, inv.buscarProducto("Bebida 3L").getStock());
+}
 
-    // TODO: registrar con 3, intentar vender 5, comprobar que vender devuelve
-    // false (assertFalse) y que el stock sigue en 3 (nunca negativo).
-    @Test
-    void rechazaVentaMayorAlStock() {
-    }
+@Test
+void rechazaVentaMayorAlStock() {
+    Inventario inv = new Inventario();
+    inv.registrar("Bebida 3L", 3);
+    assertFalse(inv.vender("Bebida 3L", 5));
+    assertEquals(3, inv.buscarProducto("Bebida 3L").getStock());
+  }
 }
